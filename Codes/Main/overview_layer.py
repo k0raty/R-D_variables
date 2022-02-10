@@ -1,8 +1,8 @@
 """
 Phase de préparamétrage :
-    On identifie le nombre de couches par neurone le plus efficaces afin d'éviter de faire trop 
+    On identifie le nombre de couches par neurone le plus efficaces afin d'éviter de faire trop
     de calculs lors de l'étape suivante qui consistera à rechercher un réseau optimisé.
-Sortie : Des graphiques permettant de mieux comprendre les choix du modèle. 
+Sortie : Des graphiques permettant de mieux comprendre les choix du modèle.
 C'est une étape optionnelle
 """
 import tensorflow as tf
@@ -19,6 +19,7 @@ from tensorflow.keras.regularizers import l1
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.regularizers import l1_l2
 import warnings
+import config
 warnings.simplefilter(action='ignore', category=FutureWarning) #Ignore des Warnings inutiles
 # prepare train and test dataset
 def prepare_data(dataset):
@@ -42,7 +43,7 @@ def fit_model(trainX, trainy, testX, testy, activity_regularizer,n_layers,optimi
     model.add(Dense(120, input_dim=n_input, activation='linear',activity_regularizer=activity_regularizer, kernel_initializer='he_uniform'))
     model.add(Activation('relu'))
     for _ in range(1, n_layers):
-        
+
         model.add(Dense(100, activation='linear', kernel_initializer='he_uniform',activity_regularizer=activity_regularizer))
         model.add(Activation('relu'))
     model.add(Dense(n_classes, activation='softmax'))
@@ -85,19 +86,19 @@ def overview_layer(dataset,optimizer='adam',num_layers=np.array([0,1,2,3,4,5,6,7
         loss, acc ,val_acc= fit_model(trainX, trainy, testX, testy, regularizer,n_layers,optimizer)
         loss_list.append(loss)
         acc_list.append(acc)
-        val_acc_list.append(val_acc)       
+        val_acc_list.append(val_acc)
         current_network = {'Layers': n_layers,'Optimiseur':optimizer, 'Regularizer': regularizer, 'Train_accuracy':acc_list[0][-1], 'Test_accuracy': val_acc_list[0][-1],'Loss':loss_list[0][-1]}
         overview=overview.append(current_network,ignore_index=True)
         # plot lines
         line_plots(regularizer, loss_list[0],n_layers,axs1)
         line_plots(regularizer, acc_list[0],n_layers,axs2)
         line_plots(regularizer, val_acc_list[0],n_layers,axs3)
-    
+
     fig1.savefig("Plots/Pre_parametrage/Loss_layer")
     fig2.savefig("Plots/Pre_parametrage/Train_layer")
     fig3.savefig("Plots/Pre_parametrage/Test_layer")
     overview=overview[overview['Train_accuracy']>0.70] #On récupère les modèles potables
-  
+
     if len(overview)==0:
         num_layers=num_layers+5*np.ones(len(num_layers))
         print("Pas de modèles concluant , tentative avec un nombre de couche plus élevé : %d \n" %num_layers)

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb  9 12:19:10 2022
-
-@author: Antony
+Fichier contenant les constantes importantes à globaliser
 """
 import pandas as pd
 from tensorflow.keras.utils import to_categorical
@@ -32,11 +30,7 @@ def create_layer(n_layer,n_neuron,n_classes=n_classes): #adapter en fonction du 
             layers.append(layers[-1]//2)
     list_neurons= [layers[:i] for i in range(1,len(layers)+1)]
     if n_layer_2 != n_layer:
-        print("la liste est",list_neurons)
         for i in range(1,n_layer-n_layer_2+1):
-            print("i est",i)
-            print(list_neurons[-1])
-            
             list_neurons.append(list_neurons[-1]+[sec])
     return list_neurons
 trainX,trainy=prepare_data(data)
