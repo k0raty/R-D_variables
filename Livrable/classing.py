@@ -121,7 +121,7 @@ def classifier(dataset):
     Main function
     """
     dataset=classing_input(dataset)
-    #dataset=homogenisation(dataset)
+    dataset=homogenisation(dataset)
     print("Le set devient : \n",dataset)
     overview(dataset.drop('index',axis=1),"Profil du set finalisé")
     return dataset
