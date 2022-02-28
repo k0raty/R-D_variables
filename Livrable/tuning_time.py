@@ -96,7 +96,7 @@ def tuning_time(results,security):
         best_time= float('inf')
         dataset_2=dataset.drop(['time'],axis=1).copy()
         size_set=[len(dataset_2)]
-        while size_set[-1]<200000:
+        while size_set[-1]<1000000:
             previous_time=time.time()  
             x_temps=dataset_2.to_numpy()
             predictions = model(x_temps)
