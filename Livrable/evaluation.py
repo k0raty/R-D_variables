@@ -34,12 +34,13 @@ def eval_processed_set(model,x_train,y_train,x_test,y_test):
     
 
     ###Test du modèle###
+    xticklabels=np.sort(pd.unique(config.dataset['time']))*10
     predictions = model(x_test)
     prediction = tf.nn.softmax(predictions).numpy()
     y_pred_test = [np.argmax(prediction[i]) for i in range(0, len(prediction))]
     fig, ax1 = plt.subplots(1, 1)
     #Heatmaps et rapport de classification#
-    g1 = sns.heatmap(confusion_matrix(y_pred_test, y_test), annot=True, ax=ax1)
+    g1 = sns.heatmap(confusion_matrix(y_pred_test, y_test), xticklabels=xticklabels, yticklabels=xticklabels,annot=True, ax=ax1)
     g1.set_ylabel('y_test')
     g1.set_xlabel('y_pred')
     g1.set_title("Heatmap for test set")
@@ -56,7 +57,7 @@ def eval_processed_set(model,x_train,y_train,x_test,y_test):
     y_pred_train = [np.argmax(prediction[i]) for i in range(0, len(prediction))]
     fig, ax2 = plt.subplots(1, 1)
     
-    g2 = sns.heatmap(confusion_matrix(y_pred_train, y_train), annot=True, ax=ax2)
+    g2 = sns.heatmap(confusion_matrix(y_pred_train, y_train), xticklabels=xticklabels, yticklabels=xticklabels,annot=True, ax=ax2)
     g2.set_ylabel('y_train')
     g2.set_xlabel('y_pred')
     g2.set_title("Heatmap for training set")
