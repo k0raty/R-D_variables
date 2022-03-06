@@ -100,7 +100,7 @@ def overview_regularizer(dataset,optimizer='adam',n_layers=4):
             index=regularizers.index(None)
         else: index=-1
         if i==index:
-            current_network = {'Layers': n_layers, 'Optimiseur':optimizer, 'Regularizer': 'Aucun', 'Train_accuracy':acc_list[0][-1], 'Test_accuracy': val_acc_list[0][-1],'Loss':loss_list[0][-1]}
+            current_network = {'Layers': n_layers, 'Optimiseur':optimizer, 'Regularizer': None, 'Train_accuracy':acc_list[0][-1], 'Test_accuracy': val_acc_list[0][-1],'Loss':loss_list[0][-1]}
 
         else : 
             current_network = {'Layers': n_layers,'Optimiseur':optimizer, 'Regularizer': regularizers[i], 'Train_accuracy':acc_list[0][-1], 'Test_accuracy': val_acc_list[0][-1],'Loss':loss_list[0][-1]}
